@@ -4,6 +4,7 @@ This repository will contain all my learning projects thought YouTube livestream
 
 - [ ] MobX
 - [ ] Provider
+- [ ] Redux
 - [ ] Bloc Library
 - [ ] RxVMS
 
