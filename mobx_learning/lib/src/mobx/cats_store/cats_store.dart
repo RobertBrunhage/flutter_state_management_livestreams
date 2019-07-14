@@ -23,6 +23,20 @@ abstract class _CatsStore with Store {
   @observable
   LoadingState state = LoadingState.loading;
 
+  @computed
+  int get facts => catFacts.length;
+
+  @observable
+  int factsReadCount = 0;
+
+  @computed
+  String get factsRead => factsReadCount.toString();
+
+  @action
+  void incrementFactsRead() {
+    factsReadCount++;
+  }
+
   @action
   Future<void> fetchCatsFacts() async {
     state = LoadingState.loading;
