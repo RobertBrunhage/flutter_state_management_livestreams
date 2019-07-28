@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux_learning/redux/actions/counter_actions.dart';
+import 'package:redux_learning/redux/stores/counter_state.dart';
 
-class CounterPage extends StatefulWidget {
+class CounterPage extends StatelessWidget {
   CounterPage({Key key}) : super(key: key);
-
-  @override
-  _CounterPageState createState() => _CounterPageState();
-}
-
-class _CounterPageState extends State<CounterPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +19,29 @@ class _CounterPageState extends State<CounterPage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            StoreConnector<CounterState, int>(
+              converter: (store) => store.state.count,
+              builder: (context, count) {
+                return Text(
+                  '$count',
+                  style: Theme.of(context).textTheme.display1,
+                );
+              },
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: StoreConnector<CounterState, VoidCallback>(
+        converter: (store) {
+          return () => store.dispatch(IncrementAction(2));
+        },
+        builder: (context, increment) {
+          return FloatingActionButton(
+            onPressed: increment,
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          );
+        },
       ),
     );
   }
