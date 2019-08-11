@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rxvms_learning/managers/counter.dart';
+import 'package:rxvms_learning/service_locator.dart';
 
 class CounterPage extends StatefulWidget {
   @override
@@ -6,14 +8,6 @@ class CounterPage extends StatefulWidget {
 }
 
 class _CounterPageState extends State<CounterPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +19,21 @@ class _CounterPageState extends State<CounterPage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            StreamBuilder<int>(
+              stream: sl<CounterManager>().addCounter,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return Text(
+                  '${snapshot.data}',
+                  style: Theme.of(context).textTheme.display1,
+                );
+              },
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () => sl<CounterManager>().addCounter(10),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),

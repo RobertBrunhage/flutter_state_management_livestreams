@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:rxvms_learning/pages/cat_facts_page.dart';
 import 'package:rxvms_learning/pages/counter_page.dart';
+import 'package:rxvms_learning/service_locator.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setUpServiceLocator();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CounterPage(),
+      home: CatFactsPage(),
     );
   }
 }
