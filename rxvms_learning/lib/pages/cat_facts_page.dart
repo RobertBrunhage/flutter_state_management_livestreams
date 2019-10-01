@@ -43,19 +43,22 @@ class _CatFactsPageState extends State<CatFactsPage> {
         stream: sl.get<CatFactsManager>().getCatFactsCommand.results,
         builder: (context, snapshot) {
           final result = snapshot.data;
-          if (result.isExecuting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (result.hasData) {
-            return ListView.builder(
-              itemCount: result.data.length,
-              itemBuilder: (context, index) {
-                final catFact = result.data[index];
-                return CatFactsTile(catFact: catFact);
-              },
-            );
-          } else {
-            return Center(child: Text('There was an error'));
+          if(result != null) {
+            if (result.isExecuting) {
+                return Center(child: CircularProgressIndicator());
+            } else if (result.hasData) {
+                return ListView.builder(
+                itemCount: result.data.length,
+                itemBuilder: (context, index) {
+                    final catFact = result.data[index];
+                    return CatFactsTile(catFact: catFact);
+                },
+                );
+            } else {
+                return Center(child: Text('There was an error'));
+            }
           }
+          return Center(child: Text('Nothing to show'));
         },
       ),
       floatingActionButton: FloatingActionButton(
